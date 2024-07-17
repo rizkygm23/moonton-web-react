@@ -20,6 +20,7 @@ use Inertia\Inertia;
 // Route::get('user', function () {
 //     return'Hi admin';
 // })->middleware(['role:user']);
+Route::redirect('/', '/prototype/login');
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -30,9 +31,20 @@ Route::get('/', function () {
     ]);
 });
 
+
+
+
+Route::prefix('prototype')->group(function(){
+    route::get('/login', function(){
+        return Inertia::render('/resources/js/Pages/Prototype/Login');
+    });
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
